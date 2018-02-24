@@ -5,9 +5,9 @@ function $(id){
 var zz = document.getElementsByClassName('block');
 // 默认属性
 var bool = 0; //设置避免点击开始游戏累加网格
-var isLei = []; //雷个数
+var isLei = []; //雷数组
 var time = 0; // 时间
-
+var mine = 10;
 // 点击开始按钮生成10x10网格并且切换场景
 
 $('gameStart').onclick = function(){
@@ -17,7 +17,10 @@ $('gameStart').onclick = function(){
     seacn();
     repeatNum();
     mouseDown();
-    $('isLeiNum').innerHTML = isLei.length;
+    $('ulWrap').oncontextmenu = function(){
+        return false;
+    }
+    $('isLeiNum').innerHTML = mine;
     timer = setInterval(function(){
         time++;
         $('time').innerHTML = '已用时'+ time +'秒';
@@ -44,7 +47,11 @@ function mouseDown(){
                     }
                 scearLel();
                 };
-            };
+            }
+            else if(e.which == 3 ){
+                    rightClick(event);
+                    $('isLeiNum').innerHTML = mine;
+                };
         }
     }
 }
@@ -69,8 +76,8 @@ function init(){
 // 判断是否重复并重新随机
 function repeatNum (){
      block = document.getElementsByClassName('block');
-    for (var i = 0; i < 10; i++) {
-        var mine = Math.floor(Math.random() * 101 );
+    for (var i = 1; i < 11; i++) {
+        var mine = Math.floor(Math.random() * 100);
         block[mine].classList.add('isLei');
         // block[mine].classList.remove('block');
            console.log(isLei)
@@ -134,7 +141,24 @@ function leftClick(dom){
 //         i,j-1    i.j    i,j+1
 //         i+1,j-1  i+1,j  i+1,j+1
         
-
+// 右键事件
+function rightClick(dom){
+    if (dom.classList.contains('check')) {
+        return false;
+    };
+    dom.classList.toggle('green');
+    if (dom.classList.contains('green') && dom.classList.contains('isLei')) {
+        mine--;
+        console.log(mine)
+    };
+    if (!dom.classList.contains('green') && dom.classList.contains('isLei')) {
+        mine++;
+        console.log(mine)
+    };
+    if (mine == 0) {
+        scearLel()
+    };
+}
              
 //点到雷之后所有的雷出现 弹出蒙版
 function leiIndex(){     
@@ -160,6 +184,7 @@ var close = $('close').onclick = function(){
    bool = 0;
    time = 0;
    isLei.length = 0;
+   mine = 10;
    clearInterval(timer);
 }
 
@@ -184,4 +209,5 @@ function scearLel(){
 // 再来一次
 $('again').onclick = function(){
     close();
+    this.style.display = 'none'
 }

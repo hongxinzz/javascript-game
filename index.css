@@ -2,7 +2,7 @@
 * @Author: anchen
 * @Date:   2018-02-24 09:09:12
 * @Last Modified by:   anchen
-* @Last Modified time: 2018-02-24 17:31:52
+* @Last Modified time: 2018-02-24 22:20:42
 */
 .wrap{
     position: fixed;
@@ -134,4 +134,7 @@
     background-color: #fff;
     border-radius: 4px;
     cursor:pointer;
+}
+.mineWrap .green{
+    background-color: green;
 }
