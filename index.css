@@ -1,0 +1,137 @@
+/* 
+* @Author: anchen
+* @Date:   2018-02-24 09:09:12
+* @Last Modified by:   anchen
+* @Last Modified time: 2018-02-24 17:31:52
+*/
+.wrap{
+    position: fixed;
+    top: 0;
+    height: 0;
+    width:100%;
+    height: 100%;
+    background-image: url('img/bg.jpg');
+    background-size: 100% 100%;
+}
+.btn{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    width: 120px;
+    height: 100px;
+   margin-left: -50px;
+   margin-top: -50px;
+}
+.btn button{
+    width: 120px;
+    height: 40px;
+    margin-bottom: 15px;
+    border:1px solid #f2f2f2;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor:pointer;
+}
+.btn a{
+    display: block;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color:#000;
+    border:1px solid #f2f2f2;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor:pointer;
+}
+.btn a:hover,.btn button:hover,#again:hover{
+    background-color: #2575eb;
+    color:#fff;
+}
+.mineWrap{
+    display: none;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    width: 500px;
+    height: 540px;
+    margin-top: -250px;
+    margin-left: -250px;
+    /*border: 1px solid #f2f2f2;*/
+    transform: rotateX(30deg) perspective(200px);
+}
+.mineWrap p{
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    color:#fff;
+}
+.mineWrap ul{
+    width: 100%;
+    height: 500px;
+}
+.mineWrap li{
+    float: left;
+    width: 48px;
+    height: 48px;
+    background-color: #2575eb;
+    border: 1px solid #f2f2f2;
+}
+/*.mineWrap .isLei{
+    background-color: red;
+}*/
+.mineWrap .check,.block{
+    text-align: center;
+    line-height: 48px;
+}
+.mineWrap .check{
+    background-color: #fff;
+}
+.endWrap{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.3);
+}
+.endWrap .end{
+    position: fixed;
+    top:50%;
+    left:50%;
+    width:580px;
+    height: 326px;
+    margin-top: -163px;
+    margin-left: -250px;
+    background-image: url('img/timg.jpg'); 
+    background-size: 100% 100%;
+}
+.close{
+    position: fixed;
+    top:10px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color:#000;
+    border:1px solid #f2f2f2;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor:pointer;
+
+}
+#again{
+    display: none;
+    float: right;
+    /*width: 120px;*/
+    height: 30px;
+    padding: 0 4px;
+    margin: 3px 10px 0 0 ;
+    border:1px solid #f2f2f2;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor:pointer;
+}
