@@ -101,6 +101,9 @@ function repeatNum (){
 function leftClick(dom){
     var isLei = document.getElementsByClassName('isLei');
     var block = document.getElementsByClassName('block');
+    if (dom.classList.contains('green')) {
+        return false;
+    };
     if (dom.classList.contains('isLei')) {
             leiIndex();
     }else{
