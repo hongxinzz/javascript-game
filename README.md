@@ -1,5 +1,6 @@
 # javascript-game
 这里将会记录我用原生js 编写出的小游戏
+        扫雷，在线浏览![扫雷]( https://hongxinzz.github.io/javascript-game/)
 
 ## 扫雷
         
