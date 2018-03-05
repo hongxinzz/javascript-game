@@ -15,10 +15,6 @@
 - **readme.md**: 项目说明文档
 
 
-## 项目演示地址
-以下是已经实现的射击游戏的 demo 地址，大家可以参考该游戏进行开发：
-[游戏基础版（只有一关）在线演示地址](http://coding.imweb.io/shooting-game/index.html#base)
-
 ## 具体要求
 
 ### 1、打通游戏整体流程 （开始->游戏进行中->成功或者失败）
@@ -149,8 +145,3 @@
     planeIcon: './img/plane.png',
   };
   ```
-
-
-
-
-PS：做好项目之后，你也可以写个简单的总结，对之前的知识进行一个回顾吸收。如果有什么疑问，也可以到我们的 [issue](http://git.imweb.io/imweb-teacher/shooting-game/issues) 上进行提问（提问之前，可以先看下是否有人曾经提过类似的问题，减少没必要的重复问题）。
