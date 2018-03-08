@@ -4,118 +4,69 @@ var canvas = document.getElementById('canvas');
 var context =  canvas.getContext('2d');
 var canvasWidth = canvas.clientWidth;
 var canvasHeight = canvas.clientHeight;
+// 获取class
+function $(className){
+  return document.getElementsByClassName(className);
+}
 /**
  * 整个游戏对象
  */
-  var CONFIG = {
-    status: 'start', // 游戏开始默认为开始中
-    level: 1, // 游戏默认等级
-    totalLevel: 6, // 总共6关
-    numPerLine: 6, // 游戏默认每行多少个怪兽
-    canvasPadding: 30, // 默认画布的间隔
-    bulletSize: 10, // 默认子弹长度
-    bulletSpeed: 10, // 默认子弹的移动速度
-    enemySpeed: 2, // 默认敌人移动距离
-    enemySize: 50, // 默认敌人的尺寸
-    enemyGap: 10,  // 默认敌人之间的间距
-    enemyIcon: './img/enemy.png', // 怪兽的图像
-    enemyBoomIcon: './img/boom.png', // 怪兽死亡的图像
-    enemyDirection: 'right', // 默认敌人一开始往右移动
-    planeSpeed: 5, // 默认飞机每一步移动的距离
-    planeSize: {
-      width: 60,
-      height: 100
-    }, // 默认飞机的尺寸,
-    planeIcon: './img/plane.png',
-  };
-  (function(){
-    var png = {};
-    function load(pic,callback){
-      var img = new Image();
-      img.src = pic;
-      img.onload = function(){
-          png[pic] = img;
-          callback();
-       }
+var GAME = {
+    //加載默認
+  init:function(opts){
+    // 合并默认参数
+    var opts = Object.assign({}, opts, CONFIG);
+    var rs = this;
+    // 飞机初始化坐标
+    var planeWidth = opts.planeSize.width
+    this.planeStartX = (canvasWidth - opts.planeSize.width) / 2;
+    this.planeStartY = canvasHeight - opts.planeSize.height - opts.canvasPadding;
+    // 飞机的可移动最大位置和最小位置
+    this.planeMaxX = canvasWidth -  opts.canvasPadding - planeWidth;
+    this.planeMinX = opts.canvasPadding;
+    // 怪物的移動位置
+    this.enemyMaxX = this.planeMaxX;
+    this.enemyMinX = this.planeMinX;
+    //怪獸默認第一只
+    this.emenyPosX = opts.canvasPadding;
+    this.emenyPosY = opts.canvasPadding;
+    rs.picLoad();
+  },
+  //圖片加載
+  picLoad:function(){
+    var rs = this;
+    var num = 0;
+    this.image = [enemyIcon,enemyBoomIcon,planeIcon]//分别为怪兽 怪兽爆炸 飞机
+    for(var i = 0; i < image.length; i++){
+        console.log(1)
+        image[i] = new Images();
+        image[i].src = image[i];
+        image[i].onload = function(){
+            num++;
+            if (num == image.length) {
+                console.log(1)
+                this.bindEvent()
+            };
+        } 
     }
-    load("img/enemy.png",Init);
-    load("img/boom.png",Init);
-    load("img/plane.png",Init);
-
-    function Init(){
-      // 开始
-    var Play = new play();
-      // 绘制怪兽
+  },//游戏按钮绑定
+  bindEvent:function(){
+    var rs = this;
+    $('js-play').onclick = function(){
+        this.play();
+        alert(1)
     }
-
-    // 点击开始游戏
-  function play(){
-      var playBtn = document.querySelector('.js-play');
-      var self = this;
-      playBtn.onclick = function() {
-        self.setStatus('playing');
-        // 绘制飞机
-        var Plane = new plane();
-      };
-    }
-    // 修改游戏状态
-  play.prototype.setStatus = function(status){
+  },//游戏状态
+  setStatus: function(status) {
     this.status = status;
     container.setAttribute("data-status", status);
-  }
-
-  // 我方飞机
-  function plane(){
-    var rs=this;
-    this.newX = CONFIG.planeSpeed;
-    imgX = (canvasWidth - CONFIG.planeSize.width) / 2;
-    imgY = canvasHeight - CONFIG.planeSize.width - 60;
-    var img = new Image();
-    img.src = CONFIG.planeIcon;
-    img.onload = function(){
-      context.drawImage(img, imgX,imgY,CONFIG.planeSize.width,CONFIG.planeSize.height);
-    }
-    window.addEventListener('keydown',function(e){
-      if(e.keyCode == 37){
-        // console.log(this.imgX-=CONFIG.planeSpeed)
-        rs.left();
-      }else if(e.keyCode == 39){
-        rs.right();
-      }
-    })
-}
-  // 左移动飞机
-plane.prototype.left = function(){
-  this.move(-this.newX);
-}
-  // 右移动
-plane.prototype.right = function(){
-  this.move(this.newX);
-}
-  // 移动共用方法
-plane.prototype.move = function(x){
-  context.clearRect(imgX,imgY ,canvasWidth, canvasHeight);
-  context.drawImage(png["img/plane.png"], imgX+=x,imgY,CONFIG.planeSize.width,CONFIG.planeSize.height);
-  
-}
-// 怪兽的方法
-function enemy(){
-  for(var i = 0;i < CONFIG.numPerLine;i++){
-      context.drawImage(png["img/enemy.png"], imgX+=x,imgY,CONFIG.planeSize.width,CONFIG.planeSize.height);
+  },//开始游戏
+  play:function(){
+    this.setStatus('playing');
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-  })();
   
 // var GAME = {
 //   /**
@@ -166,4 +117,4 @@ function enemy(){
 // }
 
 // // 初始化
-// GAME.init();
+GAME.init();
