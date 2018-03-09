@@ -4,10 +4,31 @@ var canvas = document.getElementById('canvas');
 var context =  canvas.getContext('2d');
 var canvasWidth = canvas.clientWidth;
 var canvasHeight = canvas.clientHeight;
-// 获取class
-function $(className){
-  return document.getElementsByClassName(className);
-}
+/**
+ * 游戏相关配置
+ * @type {Object}
+ */
+ var CONFIG = {
+   status: 'start', // 游戏开始默认为开始中
+   level: 1, // 游戏默认等级
+   totalLevel: 6, // 总共6关
+   numPerLine: 6, // 游戏默认每行多少个怪兽
+   canvasPadding: 30, // 默认画布的间隔
+   bulletSize: 10, // 默认子弹长度
+   bulletSpeed: 10, // 默认子弹的移动速度
+   enemySpeed: 2, // 默认敌人移动距离
+   enemySize: 50, // 默认敌人的尺寸
+   enemyGap: 10,  // 默认敌人之间的间距
+   enemyIcon: './img/enemy.png', // 怪兽的图像
+   enemyBoomIcon: './img/boom.png', // 怪兽死亡的图像
+   enemyDirection: 'right', // 默认敌人一开始往右移动
+   planeSpeed: 5, // 默认飞机每一步移动的距离
+   planeSize: {
+     width: 60,
+     height: 100
+   }, // 默认飞机的尺寸,
+   planeIcon: './img/plane.png',
+ };
 /**
  * 整个游戏对象
  */
@@ -16,6 +37,7 @@ var GAME = {
   init:function(opts){
     // 合并默认参数
     var opts = Object.assign({}, opts, CONFIG);
+    console.log(opts)
     var rs = this;
     // 飞机初始化坐标
     var planeWidth = opts.planeSize.width
@@ -30,31 +52,42 @@ var GAME = {
     //怪獸默認第一只
     this.emenyPosX = opts.canvasPadding;
     this.emenyPosY = opts.canvasPadding;
-    rs.picLoad();
+    // 图标
+    enemyIcon = opts.enemyIcon;
+    planeIcon = opts.planeIcon;
+    enemyBoomIcon = opts.enemyBoomIcon;
+    var img = [
+       enemyIcon,
+       planeIcon,
+        enemyBoomIcon
+    ]
+    console.log(img)
+    rs.picLoad(img);
   },
   //圖片加載
-  picLoad:function(){
-    var rs = this;
-    var num = 0;
-    this.image = [enemyIcon,enemyBoomIcon,planeIcon]//分别为怪兽 怪兽爆炸 飞机
-    for(var i = 0; i < image.length; i++){
-        console.log(1)
-        image[i] = new Images();
-        image[i].src = image[i];
-        image[i].onload = function(){
+  picLoad:function(pic){
+    var rs = this;  
+    var num = 0;   //默认加载为0
+    var images = [];  
+    var img = pic.length; //进来的图片个数
+    //分别为怪兽 怪兽爆炸 飞机
+    for(var i = 0; i < img; i++){
+        images[i] = new Image();
+        images[i].src = pic[i];
+        images[i].onload = function(){
             num++;
-            if (num == image.length) {
-                console.log(1)
-                this.bindEvent()
+            if (num === img) {
+                rs.bindEvent()
             };
         } 
     }
   },//游戏按钮绑定
   bindEvent:function(){
+    console.log('绑定事件')
     var rs = this;
-    $('js-play').onclick = function(){
-        this.play();
-        alert(1)
+    var playBtn = document.querySelector('.js-play');
+    playBtn.onclick = function(){
+        rs.play();
     }
   },//游戏状态
   setStatus: function(status) {
@@ -63,58 +96,10 @@ var GAME = {
   },//开始游戏
   play:function(){
     this.setStatus('playing');
+  },//飞机初始化
+  plane:function(){
+    var rs = this;
   }
 }
 
-
-  
-// var GAME = {
-//   /**
-//    * 初始化函数,这个函数只执行一次
-//    * @param  {object} opts 
-//    * @return {[type]}      [description]
-//    */
-//   init: function(opts) {
-//     this.status = 'start';
-//     this.bindEvent();
-//     var loadPlane = new loadPlane();
-//   },
-//   bindEvent: function() {
-//     var self = this;
-//     var playBtn = document.querySelector('.js-play');
-//     // 开始游戏按钮绑定
-//     playBtn.onclick = function() {
-//       self.play();
-//     };
-//   },
-//   /**
-//    * 更新游戏状态，分别有以下几种状态：
-//    * start  游戏前
-//    * playing 游戏中
-//    * failed 游戏失败
-//    * success 游戏成功
-//    * all-success 游戏通过
-//    * stop 游戏暂停（可选）
-//    */
-//   setStatus: function(status) {
-//     this.status = status;
-//     container.setAttribute("data-status", status);
-//   },
-//   play: function() {
-//     this.setStatus('playing');
-//   }
-// };
-// // 飞机初始化
-// GAME.init.prototype.loadPlane = function(){
-//   imgX = (canvasWidth - CONFIG.planeSize.width) / 2;
-//     imgY = canvasHeight - CONFIG.planeSize.width - 60;
-//     console.log(imgY)
-//     var img = new Image();
-//     img.src = CONFIG.planeIcon;
-//     img.onload = function(){
-//       context.drawImage(img, imgX,imgY,CONFIG.planeSize.width,CONFIG.planeSize.height);
-//     }
-// }
-
-// // 初始化
 GAME.init();
