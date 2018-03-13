@@ -4,7 +4,16 @@ var canvas = document.getElementById('canvas');
 var context =  canvas.getContext('2d');
 var canvasWidth = canvas.clientWidth;
 var canvasHeight = canvas.clientHeight;
-
+// 判断是否有 requestAnimationFrame 方法，如果有则模拟实现
+window.requestAnimFrame =
+window.requestAnimationFrame ||
+window.webkitRequestAnimationFrame ||
+window.mozRequestAnimationFrame ||
+window.oRequestAnimationFrame ||
+window.msRequestAnimationFrame ||
+function(callback) {
+    window.setTimeout(callback, 1000 / 30);
+};
 /**
  * 整个游戏对象
  */
@@ -32,6 +41,7 @@ var GAME = {
     //怪獸默認第一只
     this.emenyPosX = opts.canvasPadding;
     this.emenyPosY = opts.canvasPadding;
+
     // 图标
     enemyIcon = opts.enemyIcon;
     planeIcon = opts.planeIcon;
@@ -62,6 +72,8 @@ var GAME = {
             };
         } 
     }
+    // 飞机图标
+    this.planeIcon = images[1];
   },
   //游戏按钮绑定
   bindEvent:function(){
@@ -79,19 +91,35 @@ var GAME = {
   play:function(){
     var rs = this;
     var opts = this.opts;
+    // var planeIconImage = rs.planeIcon;
     // 实例飞机
     this.plane = new plane({
-        x:rs.planeStartX,
+        x:rs.planeStartX, 
         y:rs.planeStartY,
         width:rs.planeWidth,
         height:rs.planeHeight,
-        speed:rs.speed
+        speed:rs.speed,
+        planeMaxX:rs.planeMaxX,
+        planeMinX:rs.planeMinX,
+        planeIconImage:rs.planeIcon
     })
     // 更改游戏状态
     this.setStatus('playing');
   },//飞机初始化
-  plane:function(){
-    var rs = this;
+  update:function(){
+    alert(1)
+     var rs = this;
+     var opts = this.opts;
+     context.clearRect(0, 0, canvasWidth, canvasHeight);
+     this.plane.draw();
+     // 不断循环 update
+    requestAnimFrame(function() {
+        console.log(1)
+      rs.update()
+    });
+  },
+  draw:function(){
+    this.plane.draw();
   }
 }
 
