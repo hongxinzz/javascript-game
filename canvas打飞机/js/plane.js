@@ -12,11 +12,18 @@ var plane = function(opts){
     this.planeIcon = opts.planeIconImage;
     this.planeWidth = opts.width;
     this.planeHeight = opts.height;
+    // 子弹对象数组
+    this.bullets = [];
+    this.bulletSpeed = opts.bulletSpeed;
+    this.bulletSize = opts.bulletSize;
 }
 plane.prototype = {
     keydown:function(event){
         var key  = event.keyCode;
         switch(key){
+            case 32: 
+            this.shoot();
+            break;
             case 37:
             this.move(-this.speed)
             break;
@@ -26,17 +33,27 @@ plane.prototype = {
         }
     },
     move:function(speed){
-        var newX = this.moveX += speed;
-        if (newX && newX >= this.planeMaxX) {
-            newX = this.planeMaxX;
+        this.moveX += speed;
+        if (this.moveX && this.moveX >= this.planeMaxX) {
+            this.moveX = this.planeMaxX;
         }
-        if(newX && newX <= this.planeMinX){
-            newX = this.planeMinX;
+        if(this.moveX && this.moveX <= this.planeMinX){
+            this.moveX = this.planeMinX;
         }
-        
+        console.log(this.moveX)
+    },
+    shoot:function(){
+        var x = this.moveX + this.planeWidth / 2;
+        // 创建子弹
+        this.bullets.push(new Bullet({
+          x: x,
+          y: this.moveY,
+          size: this.bulletSize,
+          speed: this.bulletSpeed 
+        }));
     },
     draw:function(){
-        console.log(this.planeIcon)
+        // this.bullets.draw();
         context.drawImage(this.planeIcon,this.moveX,this.moveY,this.planeWidth,this.planeHeight)
     }
 }
