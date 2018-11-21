@@ -53,7 +53,9 @@ plane.prototype = {
         }));
     },
     draw:function(){
-        // this.bullets.draw();
-        context.drawImage(this.planeIcon,this.moveX,this.moveY,this.planeWidth,this.planeHeight)
+        var img = new Image();
+        img.src = this.planeIcon
+        context.drawImage(img,this.moveX,this.moveY,this.planeWidth,this.planeHeight)
+        this.bullets
     }
 }
