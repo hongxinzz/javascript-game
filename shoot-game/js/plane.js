@@ -2,7 +2,6 @@
 // 飞机的方法
 var plane = function(opts){
   document.onkeydown = this.keydown.bind(this);
-  console.log(opts)
     var opts = opts || {};
     this.moveX = opts.x;
     this.moveY = opts.y;
@@ -45,7 +44,7 @@ plane.prototype = {
     shoot:function(){
         var x = this.moveX + this.planeWidth / 2;
         // 创建子弹
-        this.bullets.push(new Bullet({
+        game.planeBullet.push(new Bullet({
           x: x,
           y: this.moveY,
           size: this.bulletSize,
@@ -56,6 +55,5 @@ plane.prototype = {
         var img = new Image();
         img.src = this.planeIcon
         context.drawImage(img,this.moveX,this.moveY,this.planeWidth,this.planeHeight)
-        this.bullets
     }
 }
