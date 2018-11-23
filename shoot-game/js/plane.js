@@ -1,7 +1,6 @@
 
 // 飞机的方法
 var plane = function(opts){
-  document.onkeydown = this.keydown.bind(this);
     var opts = opts || {};
     this.moveX = opts.x;
     this.moveY = opts.y;
@@ -17,29 +16,21 @@ var plane = function(opts){
     this.bulletSize = opts.bulletSize;
 }
 plane.prototype = {
-    keydown:function(event){
-        var key  = event.keyCode;
-        switch(key){
-            case 32: 
-            this.shoot();
-            break;
-            case 37:
-            this.move(-this.speed)
-            break;
-            case 39:
-            this.move(this.speed)
-            break;
+    translate:function(direction){
+        var addX;
+        if (direction === 'left') {
+          // 判断是否到达左边界，是的话则不移动，否则移动一个身位
+          addX = this.moveX < this.planeMinX ? 0 : -this.speed;
+          console.log(addX)
+        } else {
+          // 判断是否到达右边界，是的话则不移动，否则移动一个身位
+          addX = this.moveX > this.planeMaxX ? 0 : this.speed;
         }
+        this.move(addX, 0);
+        return this;
     },
-    move:function(speed){
-        this.moveX += speed;
-        if (this.moveX && this.moveX >= this.planeMaxX) {
-            this.moveX = this.planeMaxX;
-        }
-        if(this.moveX && this.moveX <= this.planeMinX){
-            this.moveX = this.planeMinX;
-        }
-        console.log(this.moveX)
+    move:function(addX,num){
+        this.moveX = addX? this.moveX +addX: this.moveX +0
     },
     shoot:function(){
         var x = this.moveX + this.planeWidth / 2;

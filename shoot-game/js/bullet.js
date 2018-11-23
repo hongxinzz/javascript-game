@@ -22,15 +22,11 @@ Bullet.prototype.move = function(){
   if(this.y <= 0){
     game.planeBullet.splice(game.planeBullet.indexOf(this),1)
   }  
-  console.log(game.planeBullet)
   for(var i = 0; i < game.monsterList.length;i++){
-    if(this.y <= game.monsterList[i].y && this.x < game.monsterList[i].gap  && this.x > game.monsterList[i].gap - game.enemySize){
+    if(this.y <= game.monsterList[i].y && this.x < game.monsterList[i].gap  && this.x > game.monsterList[i].gap - game.opts.enemySize){
+      game.monsterList[i].momster = game.opts.enemyBoomIcon;
       console.log('我碰到怪兽了')
-      game.planeBullet.splice(0,game.planeBullet.indexOf(this) + 1)
-      game.numPerLine--;
-      game.gameNum++;
-      game.monsterList[i].momster  = game.enemyBoomIcon
-      game.monsterList.splice(i,1)
+      game.gameCount(i);
     } 
   }
 }
