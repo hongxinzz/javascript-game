@@ -51,6 +51,8 @@ var myReq;
         count++;
         if (count == game.gamePic.length) {
           console.log('加载完成了，开始游戏', that)
+          $('.loading').style.display = 'none';
+          $('.game-intro').style.display = 'block';
           that.Beforetart();
         }
       }
