@@ -19,4 +19,6 @@ var CONFIG = {
     }, // 默认飞机的尺寸,
     planeIcon: './img/plane.png',
     gameNum:0,//游戏分数
+    fontSize : "18px 微软雅黑",
+    fillStyle : '#fff',
 }
